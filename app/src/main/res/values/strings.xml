@@ -8,4 +8,7 @@
     <string name="title_activity_view_messages">ViewMessagesActivity</string>
     <string name="Tag">Tag</string>
     <string name="Search">Search</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

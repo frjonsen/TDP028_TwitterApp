@@ -13,6 +13,8 @@ import java.util.ArrayList;
  * Created by vakz on 10/28/15.
  */
 public class MessageAdapter extends ArrayAdapter<Message> {
+    ArrayList<Message> messages;
+
     public MessageAdapter(Context context, ArrayList<Message> messages) {
         super(context, 0, messages);
     }
@@ -31,9 +33,14 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         return convertView;
     }
 
-    public void replaceList(ArrayList<Message> messages) {
+    public void replaceList(ArrayList<Message> m) {
         clear();
+        messages = m;
         addAll(messages);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Message> getMessages() {
+        return messages;
     }
 }

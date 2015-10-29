@@ -1,22 +1,32 @@
 package com.example.vakz.twitterapp;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class ViewMessagesActivity extends Activity {
+public class ViewMessagesActivity extends Activity implements AllMessagesFragment.OnFragmentInteractionListener, AuthorFilteredFragment.OnFragmentInteractionListener {
 
     MessageAdapter messages;
+    AllMessagesFragment allMessagesFragment;
+    AuthorFilteredFragment authorFilteredFragment;
+
+    @Override
+    public void OnMessageClicked(int pos) {
+
+        getFragmentManager().beginTransaction().replace(R.id.fragmentplaceholder, authorFilteredFragment).addToBackStack("AllMessages").commit();
+        authorFilteredFragment.setFilter(messages.getItem(pos).author);
+    }
+
+    protected MessageAdapter getMessages() {
+        return messages;
+    }
 
     private class SearchMessagesTask extends AsyncTask<Void, Void, ArrayList<Message>> {
 
@@ -39,6 +49,7 @@ public class ViewMessagesActivity extends Activity {
 
         @Override
         protected void onPostExecute(ArrayList<Message> m) {
+
             messages.replaceList(m);
         }
     }
@@ -47,11 +58,18 @@ public class ViewMessagesActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_messages);
-        ListView lw = (ListView)findViewById(R.id.MessagesView);
+        setMessagesFragments();
         messages = new MessageAdapter(this, new ArrayList<Message>());
-        lw.setAdapter(messages);
         (new SearchMessagesTask()).execute();
         setupOnClick();
+
+
+    }
+
+    protected void setMessagesFragments() {
+        allMessagesFragment = AllMessagesFragment.newInstance();
+        authorFilteredFragment = AuthorFilteredFragment.newInstance();
+        getFragmentManager().beginTransaction().add(R.id.fragmentplaceholder, allMessagesFragment).commit();
     }
 
     void setupOnClick() {

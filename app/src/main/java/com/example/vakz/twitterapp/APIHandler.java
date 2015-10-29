@@ -48,8 +48,7 @@ public final class APIHandler {
                         c.getString("author"),
                         c.getString("body"),
                         c.getString("tag"),
-                        c.getString("title"),
-                        c.getInt("id")
+                        c.getString("title")
                 ));
             }
         }
