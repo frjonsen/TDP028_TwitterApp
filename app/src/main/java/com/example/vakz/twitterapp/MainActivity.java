@@ -1,9 +1,12 @@
 package com.example.vakz.twitterapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +14,18 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button viewMsgsButton = (Button)findViewById(R.id.ViewMsgsButton);
+        viewMsgsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startViewMsgsActivity();
+
+            }
+        });
+    }
+
+    protected void startViewMsgsActivity() {
+        startActivity(new Intent(this, ViewMessagesActivity.class));
     }
 
     @Override
