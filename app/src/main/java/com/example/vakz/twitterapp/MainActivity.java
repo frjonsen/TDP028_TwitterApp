@@ -19,13 +19,23 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startViewMsgsActivity();
-
+            }
+        });
+        Button sendMsgButton = (Button)findViewById(R.id.SendMsgButton);
+        sendMsgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPostMsgActivity();
             }
         });
     }
 
     protected void startViewMsgsActivity() {
         startActivity(new Intent(this, ViewMessagesActivity.class));
+    }
+
+    protected void startPostMsgActivity() {
+        startActivity(new Intent(this, PostMessageActivity.class));
     }
 
     @Override

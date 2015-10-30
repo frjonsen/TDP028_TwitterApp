@@ -3,6 +3,7 @@ package com.example.vakz.twitterapp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -80,20 +81,21 @@ public final class APIHandler {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<Message>();
+            return new ArrayList<>();
         }
 
     }
 
-    public static void sendMessage(Map<String, String> params) throws java.io.IOException {
+    public static int sendMessage(Map<String, String> params) throws java.io.IOException {
         HttpURLConnection url = (HttpURLConnection)(new URL("http://tdp028-test.openshift.ida.liu.se/add")).openConnection();
         url.setRequestProperty("Content-Type", "application/json");
+        url.setDoOutput(true);
         url.connect();
         JSONObject p = new JSONObject(params);
-        DataOutputStream d = new DataOutputStream(url.getOutputStream());
-        d.writeUTF(URLEncoder.encode(p.toString(), "UTF-8"));
-        d.flush();
-        d.close();
+        System.out.println(p.toString());
+        url.getOutputStream().write(p.toString().getBytes());
+        url.disconnect();
+        return url.getResponseCode();
     }
 
 }
